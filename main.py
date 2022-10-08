@@ -1,46 +1,61 @@
+'''
+Program ma za zadanie przepytywać z podanej listy słów.
+Tłumaczenie z Polskiego na Angielski
+'''
 import random
 import pyttsx3
-import speech_recognition as sr
 engine = pyttsx3.init()
-engine.setProperty("voice", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_PL-PL_PAULINA_11.0")
-engine.setProperty("rate", 140)
+engine.setProperty("voice","HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_PL-PL_PAULINA_11.0")
+engine.setProperty("rate", 130)
 engine.setProperty('age', 20)
-lista_slowek = [
-    ('Ciepło','Warm'),
-    ('Zimno','Cold'),
-    ('Wiatr','Wind'),
-    ('Spider','Pająk'),
+
+word_list = [
+    ('Obywatelstwo', 'Citizenship'),
+    ('Data urodzenia', 'Date of birth'),
+    ('Wykształcenie', 'Educational background'),
+    ('Kobieta, płeć żeńska', 'Female'),
+    ('Imię i nazwisko', 'Full name'),
+    ('Nazwisko panieńskie', 'Maiden name'),
+    ('Stan cywilny', 'Marital status'),
+    ('Narodowość', 'Nationality'),
+    ('W separacji', 'Separated'),
+    ('Kawaler', 'Single'),
+    ('Atrakcyjny,ładny', 'Attractive'),
+    ('Przeciętny', 'Average'),
+    ('Piękny', 'Beautiful'),
+    ('Elegancki', 'Elegant'),
+    ('Niechlujny', 'Scruffy'),
+    ('Starszy w formie grzecznościowej', 'Elderly'),
+    ('Młody', 'Young'),
 ]
-# tu nastepuje losowania slowa z listy
-losuj_pare_slow = random.choice(lista_slowek)
-# tu jest losowany klucz.Wartosc okreslajaca pozycje w krotce.
-losuj_pare_kluczy = random.randint(0,1)
-#
-wybrane_slowo = losuj_pare_slow
-#tu jest wypisane pytanie o przetlumaczenie slowa
-pytanie = wybrane_slowo[losuj_pare_kluczy]
-print("TEST:",losuj_pare_slow[0])
-print("TEST:",losuj_pare_slow[1])
-print("Pretłumacz",pytanie)
-twoj_wybor = input("Podaj odpowiedz")
-twoj_wybor = twoj_wybor.lower()
-print(twoj_wybor)
-#instrukcja sprawdzajaca wynik
-
-# musi sprawdz. Jezeli 0 to dodac 1. Jezeli 1 to -1.po czym sprawdzic czy sa rowne.
-# funkcja sprawdzajaca i zmniejszajaca lub zwiekszajaca klucz
-if losuj_pare_kluczy == 0:
-    sprawdzwynik = losuj_pare_kluczy + 1
-else:
-    sprawdzwynik = losuj_pare_kluczy -1
-
-print("Odpowiedz to",losuj_pare_slow[sprawdzwynik])
-koncowy_wynik = losuj_pare_slow[sprawdzwynik]
-koncowy_wynik = koncowy_wynik.lower()
-
-#
-if twoj_wybor == koncowy_wynik:
-    print("brawo")
-else:
-    print("slabo")
-print(sprawdzwynik)
+# warunek pętli
+i = 0
+while i < 1:
+    # Poniżej następuje losowanie słowa.
+    draw_an_english_word = random.choice(word_list)
+    
+    # Poniżej wartość [0] oznacza ze ma być wybrane tylko Polskie słowo
+    question = draw_an_english_word[0]
+    
+    # Prosi o wykonanie polecenia.
+    print("Przetłumacz:", question)
+    engine.say("Przetłumacz")
+    engine.say(question)
+    engine.runAndWait()
+    answer = input("Podaj odpowiedź: ")
+    answer = answer.lower()
+    
+    # Sprawdza wynik z krotki. Wartość [1] to angielskie tłumaczenie.
+    result = draw_an_english_word[1]
+    result = result.lower()
+    
+    # instrukcja sprawdzająca wynik. Mówi także po angielsku by ćwiczyć wymowę.
+    if answer == result:
+        print("Odpowiedziałeś", answer.capitalize())
+        engine.say("Odpowiedziałeś")
+        engine.say(answer)
+        engine.runAndWait()
+    else:
+        print("Źle! Prawidłowa odpowiedź to:", result.capitalize())
+        engine.say("Źle! Prawidłowa odpowiedź to")
+        engine.say(result)
